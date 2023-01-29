@@ -11,9 +11,9 @@ class PostSchema(BaseModel):
 
 class UserSchema(BaseModel):
     __tablename__ = "Users"
-    id = Column(Integer, index= True )
+    id = Column(Integer, index=True)
     name: str = Field(default=None)
-    email: EmailStr = Field(default=None, primary_key= True)
+    email: EmailStr = Field(default=None, primary_key=True)
     password: str = Field(default=None)
 
     class config:
@@ -38,7 +38,7 @@ class UserLoginSchema(BaseModel):
 
 class Users(base):
     __tablename__ = "Users"
-    id = Column(Integer, index= True, primary_key= True)
+    id = Column(Integer, index=True, primary_key=True)
     Username = Column(String)
     passoword = Column(String)
     email = Column(String)
