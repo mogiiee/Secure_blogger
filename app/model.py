@@ -10,8 +10,10 @@ class PostSchema(BaseModel):
 
 
 class UserSchema(BaseModel):
+    __tablename__ = "Users"
+    id = Column(Integer, index= True )
     name: str = Field(default=None)
-    email: EmailStr = Field(default=None)
+    email: EmailStr = Field(default=None, primary_key= True)
     password: str = Field(default=None)
 
     class config:

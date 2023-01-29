@@ -47,9 +47,12 @@ async def add_post(post: PostSchema):
 
 
 @app.post("/user/signup", tags=["User"])
-async def user_signup(user: UserSchema = Body(default=None)):
-    users.append(user)
-    return signJWT(user.email)
+async def user_signup(user: UserSchema = Body(default=None), db :Session = Depends(get_d)):
+
+    user_model = model.UserSchema()
+    user_model.email = user.
+    # users.append(user)
+    # return signJWT(user.email)
 
 
 def check_user(data: UserLoginSchema):
@@ -65,3 +68,11 @@ async def user_login(user: UserLoginSchema = Body(default=None)):
         return signJWT(user.email)
     else:
         return response(False, "invalid user pls login again")
+
+
+def get_db():
+    try:
+        db = session_local()
+        yield db
+    finally:
+        db.close()
