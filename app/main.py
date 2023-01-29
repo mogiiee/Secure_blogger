@@ -50,7 +50,9 @@ async def add_post(post: PostSchema):
 async def user_signup(user: UserSchema = Body(default=None), db :Session = Depends(get_d)):
 
     user_model = model.UserSchema()
-    user_model.email = user.
+    user_model.email = user.email
+    user_model.password = user.password
+    user_model.name = user.name
     # users.append(user)
     # return signJWT(user.email)
 
