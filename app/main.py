@@ -3,6 +3,9 @@ from app.model import PostSchema, UserLoginSchema, UserSchema
 from app.responses import response
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JWTBearer
+import app.model as model
+from app.db import session_local, engine 
+from sqlalchemy.orm import Session
 
 posts = [
     {"id": 1, "title": "some title 1", "content": "some content 1"},
@@ -14,6 +17,7 @@ users = []
 
 app = FastAPI()
 
+model.base.metadata.create_all(bind  = engine)
 
 @app.get("/", tags=["greetings"])
 async def greet():

@@ -1,4 +1,6 @@
 from pydantic import BaseModel, Field, EmailStr
+from sqlalchemy import Column, Integer, String
+from app.db import base
 
 
 class PostSchema(BaseModel):
@@ -30,3 +32,11 @@ class UserLoginSchema(BaseModel):
         main_schema = {
             "demo user": {"email": "amogh@gmail.com", "password": "123amogh"}
         }
+
+
+class Users(base):
+    __tablename__ = "Users"
+    id = Column(Integer, index= True, primary_key= True)
+    Username = Column(String)
+    passoword = Column(String)
+    email = Column(String)
