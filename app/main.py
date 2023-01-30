@@ -3,6 +3,7 @@ from app.model import PostSchema, UserLoginSchema, UserSchema
 from app.responses import response
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JWTBearer
+from . import db, ops
 app = FastAPI()
 
 
@@ -36,10 +37,12 @@ async def get_one_post(id: int):
 
 @app.post("/posts", tags=["Posts"], dependencies=[Depends(JWTBearer())])
 async def add_post(post: PostSchema):
-    post.id = len(posts) + 1
-    posts.append(dict(post))
-    return response(True, "information is added")
+    collection = dict(db.collection.insert_one(post))
+    print(type(collection))
 
+    # post.id = len(posts) + 1
+    # posts.append(dict(post))
+    return response(True, post)
 
 
 @app.post("/user/signup", tags=["User"])
