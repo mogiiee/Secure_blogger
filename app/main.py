@@ -3,9 +3,8 @@ from app.model import PostSchema, UserLoginSchema, UserSchema
 from app.responses import response
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JWTBearer
-import app.model as model
-from app.db import session_local, engine
-from sqlalchemy.orm import Session
+app = FastAPI()
+
 
 posts = [
     {"id": 1, "title": "some title 1", "content": "some content 1"},
@@ -14,11 +13,6 @@ posts = [
 ]
 
 users = []
-
-app = FastAPI()
-
-model.base.metadata.create_all(bind=engine)
-
 
 @app.get("/", tags=["greetings"])
 async def greet():
@@ -47,25 +41,13 @@ async def add_post(post: PostSchema):
     return response(True, "information is added")
 
 
-def get_db():
-    try:
-        db = session_local()
-        yield db
-    finally:
-        db.close()
-
 
 @app.post("/user/signup", tags=["User"])
 async def user_signup(
-    user: UserSchema = Body(default=None), db: Session = Depends(get_db)
+    user: UserSchema = Body(default=None)
 ):
-
-    user_model = model.UserSchema()
-    user_model.name = user.name
-    user_model.email = user.email
-    user_model.password = user.password
-    # users.append(user)
-    # return signJWT(user.email)
+    users.append(user)
+    return signJWT(user.email)
 
 
 def check_user(data: UserLoginSchema):
