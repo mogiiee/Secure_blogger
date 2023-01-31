@@ -1,4 +1,4 @@
-from dotenv import load_dotenv,find_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 
 mongo_details = os.environ.get("MONGO_CREDENTIALS")

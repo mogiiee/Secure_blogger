@@ -30,5 +30,3 @@ class UserLoginSchema(BaseModel):
         main_schema = {
             "demo user": {"email": "amogh@gmail.com", "password": "123amogh"}
         }
-
-

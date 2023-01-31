@@ -4,6 +4,7 @@ from app.responses import response
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JWTBearer
 from . import db, ops
+
 app = FastAPI()
 
 
@@ -14,6 +15,7 @@ posts = [
 ]
 
 users = []
+
 
 @app.get("/", tags=["greetings"])
 async def greet():
@@ -46,9 +48,7 @@ async def add_post(post: PostSchema):
 
 
 @app.post("/user/signup", tags=["User"])
-async def user_signup(
-    new_user: UserSchema = Body(default=None)
-):
+async def user_signup(new_user: UserSchema = Body(default=None)):
     ops.inserter(new_user)
     return signJWT(new_user.email) and print(new_user)
 
