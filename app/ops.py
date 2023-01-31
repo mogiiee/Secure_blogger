@@ -1,7 +1,7 @@
 from . import db, responses
 
 def inserter(post):
-    if len(post) == 0:
+    if post == {""}:
         return responses.response(False, "length is wrong")       
     else:
         db.collection.insert_one(post)

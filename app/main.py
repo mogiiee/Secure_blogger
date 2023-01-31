@@ -47,10 +47,10 @@ async def add_post(post: PostSchema):
 
 @app.post("/user/signup", tags=["User"])
 async def user_signup(
-    user: UserSchema = Body(default=None)
+    new_user: UserSchema = Body(default=None)
 ):
-    users.append(user)
-    return signJWT(user.email)
+    ops.inserter(new_user)
+    return signJWT(new_user.email) and print(new_user)
 
 
 def check_user(data: UserLoginSchema):
