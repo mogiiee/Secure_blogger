@@ -28,5 +28,8 @@ class UserLoginSchema(BaseModel):
 
     class config:
         main_schema = {
-            "demo user": {"email": "amogh@gmail.com", "password": "123amogh"}
+            "demo user": 
+            {"email": "amogh@gmail.com",
+             "password": "123amogh"
+             }
         }
