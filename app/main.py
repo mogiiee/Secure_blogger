@@ -53,23 +53,22 @@ async def add_post(post: PostSchema):
 @app.post("/user/signup", tags=["User"])
 async def user_signup(new_user: UserSchema):
     payload = jsonable_encoder(new_user)
-    print(payload)
     ops.inserter(payload)
     return response(True,signJWT(payload))
 
 
 
 
-# @app.post("/user/login", tags=["User"])
-# async def user_login(user: UserLoginSchema = Body(default=None)):
-#     if check_user(user):
-#         return signJWT(user.email)
-#     else:
-#         return response(False, "invalid user pls login again")
+@app.post("/user/login", tags=["User"])
+async def user_login(user: UserLoginSchema = Body(default=None)):
+    if check_user(user):
+        return signJWT(user.email)
+    else:
+        return response(False, "invalid user pls login again")
 
 
-# def check_user(data: UserLoginSchema):
-#     for user in users:
-#         if user.email == data.email and user.password == data.password:
-#             return True
-#         return False
+def check_user(data: UserLoginSchema):
+    for user in users:
+        if user.email == data.email and user.password == data.password:
+            return True
+        return False
