@@ -11,7 +11,7 @@ Getting Started
 To get started, clone this repository and install the required dependencies.
 
 ``` 
-clone https://github.com/mogiiee/Secure_blogger.git
+git clone https://github.com/mogiiee/Secure_blogger.git
 pip install -r requirements.txt 
 ```
 
