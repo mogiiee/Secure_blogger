@@ -1,20 +1,23 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr
 
 
 class PostSchema(BaseModel):
-    id: int = Field(default=None)
-    title: str = Field(default=None)
-    content: str = Field(default=None)
+    id: int
+    title: str
+    content: str 
 
 
 class UserSchema(BaseModel):
-    name: str = Field(default=None)
-    email: EmailStr = Field(default=None, primary_key=True)
-    password: str = Field(default=None)
+    ObjectId : int
+    name: str
+    email: EmailStr 
+    password: str 
+    something: str
 
     class config:
         main_schema = {
             "demo user": {
+                "_id": 0,
                 "username": "amogh",
                 "email": "amogh@gmail.com",
                 "password": "123amogh",
@@ -23,8 +26,9 @@ class UserSchema(BaseModel):
 
 
 class UserLoginSchema(BaseModel):
-    email: EmailStr = Field(default=None)
-    password: str = Field(default=None)
+    ObjectId: int
+    email: EmailStr 
+    password: str
 
     class config:
         main_schema = {
