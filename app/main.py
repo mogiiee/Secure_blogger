@@ -1,14 +1,25 @@
-from fastapi import FastAPI, Body, Depends
-from app.model import PostSchema, UserLoginSchema, UserSchema
+from fastapi import FastAPI, Body, Depends, Request, HTTPException
+from app.model import PostSchema, UserLoginSchema, details
 from app.responses import response
 from app.auth.jwt_handler import signJWT
 from app.auth.jwt_bearer import JWTBearer
 from . import db, ops
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
 
 
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 posts = [
@@ -18,6 +29,17 @@ posts = [
 ]
 
 users = []
+
+@app.post("/signup/creator", tags=["creator"])
+async def creator_signup(signup_details: Request):
+    infoDict = await signup_details.json()
+    print(infoDict)
+    infoDict = dict(infoDict)
+    print(infoDict)
+    # Checking if email already exists
+    inserted = db.collection.insert_one(
+        infoDict
+    )
 
 
 @app.get("/", tags=["greetings"])
@@ -51,12 +73,14 @@ async def add_post(post: PostSchema):
 
 
 @app.post("/user/signup", tags=["User"])
-async def user_signup(new_user: UserSchema):
+
+async def user_signup(new_user: details):
     payload = jsonable_encoder(new_user)
-    ops.inserter(payload)
-    return response(True,signJWT(payload))
-
-
+    try:
+        ops.inserter(payload)
+        return response(True,signJWT(payload))
+    except Exception as e:
+        return response(False,str(e))
 
 
 @app.post("/user/login", tags=["User"])
@@ -72,3 +96,4 @@ def check_user(data: UserLoginSchema):
         if user.email == data.email and user.password == data.password:
             return True
         return False
+
