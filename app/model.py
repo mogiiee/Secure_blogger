@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Union
 
 
 class PostSchema(BaseModel):
@@ -6,9 +7,14 @@ class PostSchema(BaseModel):
     title: str
     content: str 
 
+class details(BaseModel):
+    _id: 0
+    first_name: str
+    last_name: Union[str, None] = None
+    phone_number: int = None
 
 class UserSchema(BaseModel):
-    ObjectId : int
+    _id : 0
     name: str
     email: EmailStr 
     password: str 
@@ -26,7 +32,7 @@ class UserSchema(BaseModel):
 
 
 class UserLoginSchema(BaseModel):
-    ObjectId: int
+    _id: 0
     email: EmailStr 
     password: str
 
