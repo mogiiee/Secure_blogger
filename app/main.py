@@ -30,7 +30,7 @@ posts = [
 
 users = []
 
-@app.post("/pill", tags=["creator"])
+@app.post("/pill", tags=["pill"])
 async def pill_details(signup_details: Request):
     infoDict = await signup_details.json()
     infoDict = dict(infoDict)
