@@ -30,17 +30,13 @@ posts = [
 
 users = []
 
-@app.post("/signup/creator", tags=["creator"])
-async def creator_signup(signup_details: Request):
+@app.post("/pill", tags=["creator"])
+async def pill_details(signup_details: Request):
     infoDict = await signup_details.json()
-    print(infoDict)
     infoDict = dict(infoDict)
-    print(infoDict)
     # Checking if email already exists
-    inserted = db.collection.insert_one(
-        infoDict
-    )
-
+    db.collection.insert_one(infoDict)
+    return response(True, str(infoDict))
 
 @app.get("/", tags=["greetings"])
 async def greet():
